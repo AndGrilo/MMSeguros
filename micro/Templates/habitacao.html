@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block title %}
+Seguro Multirrisco de Habitação
+{% endblock %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+    <div style="background-color: #1177BC;">
+        <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1634923119/MM%20Seguros/Imagens%20formul%C3%A1rios/2_bqeim3.png">
+        <div style="text-align: center; margin-top: 2%;">
+            <a class="firstLabel">Para lhe oferecermos a melhor solução para si, preencha os campos abaixo.</a>
+        </div>
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado2">
+                <p class="vidaDadosLabel">Os seus dados</p>
+                <input class="nomeVida" type="text" name="nome" placeholder="Nome Completo" required>
+                <input class="nomeVida" type="text" name="email" placeholder="E-mail" required>
+            </div>
+            <div class="divSeparado3"></div>
+        </div>
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado4">
+                    <div class="divSeparado2-1">
+                        <input class="tlmVida" type="text" name="tlm" placeholder="Telemóvel" required>
+                    </div>
+                    <div class="divSeparado2-2">
+                        <input class="tlmVida" type="text" name="nif" placeholder="NIF" required>
+                    </div>
+                </div>
+        </div>
+
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado2">
+                <p class="vidaDadosLabel">Sobre a sua habitação</p>
+                <input class="nomeVida" type="text" name="local" placeholder="Local de Risco" required>
+            </div>
+            <div class="divSeparado3"></div>
+        </div>
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado4">
+                    <div class="divSeparado2-1">
+                        <input class="tlmVida" type="text" name="codigo_postal" placeholder="Código-Postal" required>
+                    </div>
+                    <div class="divSeparado2-2">
+                        <input class="tlmVida" type="text" name="area_bruta" placeholder="Área Bruta Privativa Total" required>
+                    </div>
+                </div>
+        </div>
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado4">
+                    <div class="divSeparado2-1">
+                        <input class="tlmVida" type="text" name="ano_de_construcao" placeholder="Ano de Construção" required>
+                    </div>
+                    <div class="divSeparado2-2">
+                        <input class="tlmVida" type="text" name="num_w_c" placeholder="Número de W.C." required>
+                    </div>
+                </div>
+        </div>
+        
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado2">
+                <p class="vidaDadosLabel">Coberturas</p>
+                <label class="toggle toggleMarginTopVida">
+                    <input class="toggle__input" type="checkbox" name="ef">
+                    <span class="toggle__label">
+                    <a class="QtdPessoasVida">Edifício/Fração</a>
+                    </span>
+                  </label>
+                  <br>
+                  <label class="toggle toggleMarginTopVida">
+                    <input class="toggle__input" type="checkbox" name="rc">
+                    <span class="toggle__label">
+                    <a class="QtdPessoasVida">Recheio/Conteúdo</a>
+                    </span>
+                  </label>
+            </div>
+        </div>
+        <div class="divSeparate">
+            <div class="divSeparado1"></div>
+            <div class="divSeparado2">
+                <p class="uploadVida" style="margin-top: 5%;">Upload de documentos (apenas 1 ficheiro)</p>
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Arraste ou clique aqui para fazer upload da carta predial</span>
+                    <input type="file" name="file" class="drop-zone__input">
+                </div>
+                <p class="ppd">
+                    <label class="toggle">
+                        <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
+                        <span class="toggle__label">
+                        </span>
+                      </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
+                  </p>
+        
+        
+        
+          {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+            </div>
+        </div>
+        
+        
+        
+        
+    
+</div>
+<script>
+    var checker = document.getElementById('ppd');
+    var sendbtn = document.getElementById('PPD');
+              
+    checker.onchange = function() {
+    sendbtn.disabled = !!this.checked ? false : true;
+    };
+</script>
+<script>
+    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+    const dropZoneElement = inputElement.closest(".drop-zone");
+  
+    dropZoneElement.addEventListener("click", (e) => {
+      inputElement.click();
+    });
+  
+    inputElement.addEventListener("change", (e) => {
+      if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+      }
+    });
+  
+    dropZoneElement.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZoneElement.classList.add("drop-zone--over");
+    });
+  
+    ["dragleave", "dragend"].forEach((type) => {
+      dropZoneElement.addEventListener(type, (e) => {
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
+    });
+  
+    dropZoneElement.addEventListener("drop", (e) => {
+      e.preventDefault();
+  
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      }
+  
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+  
+  function updateThumbnail(dropZoneElement, file) {
+    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+  
+    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+      dropZoneElement.querySelector(".drop-zone__prompt").remove();
+    }
+    if (!thumbnailElement) {
+      thumbnailElement = document.createElement("div");
+      thumbnailElement.classList.add("drop-zone__thumb");
+      dropZoneElement.appendChild(thumbnailElement);
+    }
+  
+    thumbnailElement.dataset.label = file.name;
+  
+    // Show thumbnail for image files
+    if (file.type.startsWith("image/")) {
+      const reader = new FileReader();
+  
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+      };
+    } else {
+      thumbnailElement.style.backgroundImage = null;
+    }
+  }
+  
+</script>
+</form>
+
+
+{% endblock %}

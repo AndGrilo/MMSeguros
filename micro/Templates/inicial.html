@@ -1,0 +1,177 @@
+{% extends 'base.html' %} 
+{% block title %}
+MM Seguros
+{% endblock %}
+
+{% block content %}
+<body>
+    
+    <form method="POST">
+        {{ form.hidden_tag() }}
+    <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1634912007/MM%20Seguros/1200_x_960_px_1_nmxdvi.png" style="width: 100%;">
+    <div class="amarelo">
+        <a class="validade">Válido até 30 de Dezembro</a><a class="campanha">Campanha 25 anos MM Seguros</a><a class="condicoes"href="/condicoes" style="color:black"><u>Consulte condições</u></a>
+    </div>
+        
+    <div class="carrousel0 slider">
+        <a href="#slide-1" class="button1">Vida Risco</a><a href="#slide-2" class="button1">Habitação</a><a href="#slide-3" class="button1">Saúde</a><a href="#slide-4" class="button1">Acidentes Pessoais</a>
+    </div>
+    <div class="slider">
+      
+        <div class="slides">
+          <div id="slide-1">
+            <a href='/vida'>
+            <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1635942861/MM%20Seguros/Imagens%20carroussel/1_etvbo8.png"></a>
+          </div>
+          <div id="slide-2">
+            <a href='/habitacao'>
+            <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1635942861/MM%20Seguros/Imagens%20carroussel/2_axxrij.png"></a>
+          </div>
+          <div id="slide-3">
+            <a href='/saude'>
+            <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1635942861/MM%20Seguros/Imagens%20carroussel/3_krbmtj.png"></a>
+          </div>
+          <div id="slide-4">
+            <a href='/acidentes'>
+            <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1635942861/MM%20Seguros/Imagens%20carroussel/4_hug4wj.png"></a>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    <div class="simulacao">
+        Peça uma simulação
+    </div>
+    <div class="sim">
+      <div class="imagemSim">
+        <a href="/habitacao">
+          <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636135000/MM%20Seguros/Icones/Imagem2_bomfmd.png"></a>
+      </div>
+      <div class="imagemSim">
+        <a href='/vida'>
+        <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636135000/MM%20Seguros/Icones/Imagem1_vvjpwy.png"></a>
+      </div>
+      <div class="imagemSim">
+        <a href='/saude'>
+        <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636135000/MM%20Seguros/Icones/Imagem3_o1o6zg.png"></a>
+      </div>
+      <div class="imagemSim">
+        <a href='acidentes'>
+        <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636135000/MM%20Seguros/Icones/Imagem4_guzrfy.png"></a>
+        </div>
+      </div>
+        
+
+
+    <div class="azul">
+        <div class="azul1">
+            <p class="ag">Aconselhamento gratuito</p>
+            <p class="ed">ESCLAREÇA AS SUAS DÚVIDAS</p>
+            <p class="pc">Preencha os campos com os seus dados e nós entraremos em contacto consigo, sem qualquer compromisso.</p>
+            <p></p>
+
+        </div>
+        <div class="azul2">
+          <input type="text" name="nome" placeholder="Nome Completo" style="width: 95%;" required>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <input type="text" name="tlm" placeholder="Telemóvel" style="width: 95%;" required>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <input type="text" name="email" placeholder="E-mail" style="width: 95%;" required>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <a class="prefiro">Prefiro ser contactado por</a><br>
+          <div class="classInicial">
+          <div class="classInicial1">
+            <img class="iconetlm" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1633299400/MM%20Seguros/Icones/Captura_de_ecra%CC%83_2021-10-01_a%CC%80s_18.05.03_nztmxy.png"><br>
+            <a class="labeltlm">Telemóvel</a><br>
+            <label class="toggle toggle2">
+              <input class="toggle__input" type="checkbox" name="email_checkbox">
+              <span class="toggle__label">
+              </span>
+            </label>
+          </div>
+          <div class="classInicial1">
+            <img class="iconemail" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1633299401/MM%20Seguros/Icones/Captura_de_ecra%CC%83_2021-10-01_a%CC%80s_18.05.10_klgljv.png"><br>
+            <a class="labelemail">E-mail</a><br>
+            <label class="toggle toggle2">
+              <input class="toggle__input" type="checkbox" name="email_checkbox">
+              <span class="toggle__label">
+              </span>
+            </label>
+          </div>
+          </div>
+          {{ form.submit(class="submeter") }}
+          <!--div class="azul3">
+            <div class="azul4"></div>
+          <div class="azul5">
+            <input type="text" name="nome" placeholder="Nome Completo" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+
+            <input type="text" name="tlm" placeholder="Telemóvel" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            
+
+            <input type="text" name="email" placeholder="E-mail" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <a class="prefiro">Prefiro ser contactado por</a>
+          </div>
+        </div>
+            
+            
+            
+
+            <div class="iconesTlmEmail">
+              
+              <div class="iconesTlmEmail2">
+                <img class="" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1633299400/MM%20Seguros/Icones/Captura_de_ecra%CC%83_2021-10-01_a%CC%80s_18.05.03_nztmxy.png">
+                
+                <a class="labeltlm">Telemóvel</a>
+                
+                <div class="">
+                  <label class="toggle toggle1">
+                    <input class="toggle__input" type="checkbox" name="tlm_checkbox">
+                    <span class="toggle__label">
+                    </span>
+                  </label>
+                </div>
+
+              </div>
+              
+              <div class="iconesTlmEmail2">
+                <img class="iconemail excp" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1633299401/MM%20Seguros/Icones/Captura_de_ecra%CC%83_2021-10-01_a%CC%80s_18.05.10_klgljv.png">
+                
+                <a class="labelemail">E-mail</a>
+                
+                <div class="">
+                  <label class="toggle toggle2">
+                    <input class="toggle__input" type="checkbox" name="email_checkbox">
+                    <span class="toggle__label">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="azul3">
+              <div class="azul4"></div>
+            <div class="azul5">
+              {{ form.submit(class="submeter") }}
+            <!--input type="submit" placeholder="Submeter">
+            </div-->
+            </div>
+            
+            
+
+            
+        </div>
+    </div>
+</form>
+</body>
+
+{% endblock %}

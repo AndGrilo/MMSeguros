@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}
+Seguro Acidentes Pessoais
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+<div style="background-color: #1177BC;">
+    <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1634923119/MM%20Seguros/Imagens%20formul%C3%A1rios/1_hx2bha.png">
+    <div style="text-align: center; margin-top: 2%;">
+        <a class="firstLabel">Para lhe oferecermos a melhor solução para si, preencha os campos abaixo.</a>
+    </div>
+    <div class="divSeparate">
+        <div class="divSeparado1"></div>
+        <div class="divSeparado2">
+            <p class="vidaDadosLabel">Os seus dados</p>
+            <input class="nomeVida" type="text" name="nome" placeholder="Nome Completo" required>
+            <input class="nomeVida" type="text" name="email" placeholder="E-mail" required>
+        </div>
+        <div class="divSeparado3"></div>
+    </div>
+    <div class="divSeparate">
+        <div class="divSeparado1"></div>
+        <div class="divSeparado4">
+                <div class="divSeparado2-1">
+                    <input class="tlmVida" type="text" name="tlm" placeholder="Telemóvel" required>
+                </div>
+                <div class="divSeparado2-2">
+                    <input class="tlmVida" type="text" name="nif" placeholder="NIF" required>
+                </div>
+            </div>
+    </div>
+    <div class="divSeparate">
+        <div class="divSeparado1"></div>
+        <div class="divSeparado2">
+            <input class="nomeVida" type="text" name="data_nascimento" placeholder="Data de Nascimento" required>
+            <input class="nomeVida" type="text" name="profissao" placeholder="Profissão" required>
+        </div>
+        <div class="divSeparado3"></div>
+    </div>
+
+    <div class="divSeparate">
+        <div class="divSeparado1"></div>
+        <div class="divSeparado2">
+            <p class="vidaDadosLabel" style="margin-top: 10%;">Sobre o seu seguro</p>
+            <p class="QtdPessoasVida">Capitais</p>
+            <input class="" type="text" name="capitais"><a class="vidaDadosLabel" style="margin-left: 1%;">€</a>
+            <br>
+            <p class="Coberturas" style="margin-bottom: 0%;">Utiliza viaturas de duas rodas?*</p>
+            <label class="toggle toggleMarginTopVida">
+                <input class="toggle__input" type="checkbox" name="sim" id="sim">
+                <span class="toggle__label">
+                <a class="QtdPessoasVida">Sim</a>
+                </span>
+              </label>
+              <br>
+              <label class="toggle toggleMarginTopVida">
+                <input class="toggle__input" type="checkbox" name="nao" id="nao">
+                <span class="toggle__label">
+                <a class="QtdPessoasVida">Não</a>
+                </span>
+              </label>
+              <p class="Coberturas">Observações</p>
+              <textarea class="nomeVida"  name="obs" cols="30" rows="10" style="border:none;background-color: #F1F1F1;"></textarea>
+              <p class="ppd">
+                <label class="toggle">
+                    <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
+                    <span class="toggle__label">
+                    </span>
+                  </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
+              </p>
+    
+    
+    
+      {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+        </div>
+        </div>
+        <br>
+        
+    </div>
+
+</div>
+<script>
+    var checker = document.getElementById('ppd');
+    var sendbtn = document.getElementById('PPD');
+              
+    checker.onchange = function() {
+    sendbtn.disabled = !!this.checked ? false : true;
+    };
+</script>
+
+<script>
+    var checker = document.getElementById('sim');
+    if (checker){
+        var sendc = document.getElementById('nao')
+        checker.onchange = function(){
+            sendc.disabled = !!this.checked ? true : false;
+        };
+    };
+    var checker1 = document.getElementById('nao');
+    if (checker1){
+        var sendc1 = document.getElementById('sim')
+        checker1.onchange = function(){
+            sendc1.disabled = !!this.checked ? true : false;
+        };
+    };
+</script>
+</form>
+
+
+{% endblock %}

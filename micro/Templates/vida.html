@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+{% block title %}
+Seguro de Vida
+{% endblock %}
+
+{% block content %}
+
+<form action="/uploader" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+
+
+<div style="background-color: #1177BC;">
+    <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1634923119/MM%20Seguros/Imagens%20formul%C3%A1rios/4_gtp6ch.png">
+    <div style="text-align: center; margin-top: 2%;">
+        <a class="firstLabel">Para lhe oferecermos a melhor solução para si, preencha os campos abaixo.</a>
+    </div>
+    
+
+
+<div class="divSeparate" style="margin-top: 5%;">
+    <div class="divSeparado1">
+        <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141656/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/1_paklpc.png">
+    </div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Os seus dados</p>
+        <input class="nomeVida" type="text" name="nome" placeholder="Nome Completo" required>
+        <input class="nomeVida" type="text" name="email" placeholder="E-mail" required>
+    </div>
+    <div class="divSeparado3"></div>
+</div>
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado4">
+            <div class="divSeparado2-1">
+                <input class="tlmVida" type="text" name="tlm" placeholder="Telemóvel" required>
+            </div>
+            <div class="divSeparado2-2">
+                <input class="tlmVida" type="text" name="nif" placeholder="NIF" required>
+            </div>
+        </div>
+</div>
+        
+<p></p>
+<div class="divSeparate">
+    <div class="divSeparado1">
+      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141656/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/2_wmsii6.png">
+    </div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Sobre as pessoas a segurar</p>
+        <p class="numeroVida">Número de pessoas seguras</p>
+
+        
+
+        <div>
+            <label class="toggle">
+                <input class="toggle__input" type="checkbox" name="UmaPessoa" id="umapessoa">
+                <span class="toggle__label">
+                </span>
+              </label>
+              <a class="QtdPessoasVida">1 Pessoa</a>
+              <br>
+              <label class="toggle toggleMarginTopVida">
+                <input class="toggle__input" type="checkbox" name="DuasPessoas" id='duaspessoas'>
+                <span class="toggle__label">
+                </span>
+              </label>
+              <a class="QtdPessoasVida">2 Pessoas</a>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Dados da 1ª pessoa segura</p>
+        <input class="nomeVida" type="text" name="nome1" placeholder="Nome Completo" id="umapessoa1" disabled>
+        
+    </div>
+</div>
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado4">
+            <div class="divSeparado2-1">
+                <input class="tlmVida" type="text" name="data_nascimento1" placeholder="Data de nascimento" id="umapessoa2" disabled>
+            </div>
+            <div class="divSeparado2-2">
+                <input class="tlmVida" type="text" name="genero1" placeholder="Género" id="umapessoa3" disabled>
+            </div>
+        </div>
+</div>
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <input class="nomeVida" type="text" name="estado_civil1" placeholder="Estado Civil" id="umapessoa4" disabled>
+        <input class="nomeVida" type="text" name="profissao1" placeholder="Profissão" id="umapessoa5" disabled>
+    </div>
+
+</div>
+        
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Dados da 2ª pessoa segura</p>
+        <input class="nomeVida" type="text" name="nome2" placeholder="Nome Completo" id="duaspessoas1" disabled>
+        
+    </div>
+</div>
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado4">
+            <div class="divSeparado2-1">
+                <input class="tlmVida" type="text" name="data_nascimento2" placeholder="Data de nascimento" id="duaspessoas2" disabled>
+            </div>
+            <div class="divSeparado2-2">
+                <input class="tlmVida" type="text" name="genero2" placeholder="Género" id="duaspessoas3" disabled>
+            </div>
+        </div>
+</div>
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <input class="nomeVida" type="text" name="estado_civil2" placeholder="Estado Civil" id="duaspessoas4" disabled>
+        <input class="nomeVida" type="text" name="profissao2" placeholder="Profissão" id="duaspessoas5" disabled>
+    </div>
+
+</div>
+
+<div class="divSeparate">
+    <div class="divSeparado1">
+      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141889/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/3_rawgzo.png">
+    </div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Sobre o seu seguro</p>
+        <input class="nomeVida" type="text" name="seg" placeholder="Capital Seguro / Valor em dívida" required>
+        <p class="Coberturas">Coberturas</p>
+            <label class="toggle">
+                <input class="toggle__input" type="checkbox" name="mrt">
+                <span class="toggle__label">
+                </span>
+              </label>
+              <a class="QtdPessoasVida">Morte</a>
+              <br>
+              <label class="toggle toggleMarginTopVida">
+                <input class="toggle__input" type="checkbox" name="iad">
+                <span class="toggle__label">
+                </span>
+              </label>
+              <a class="QtdPessoasVida">IAD Invalidez Absoluta Definitiva</a>
+              <br>
+              <label class="toggle toggleMarginTopVida">
+                <input class="toggle__input" type="checkbox" name="itp">
+                <span class="toggle__label">
+                </span>
+              </label>
+              <a class="QtdPessoasVida">ITP Invalidez Total Permanente</a>
+
+              <p class="Coberturas">Fracionamento</p>
+
+              <form name="form1" id="form1" action="/action_page.php">
+                <select class="dropd" name="subject" id="subject">
+                  <option value="" selected="selected">Selecione uma opção</option>
+                </select>
+                <br><br>
+              </form>
+              <p class="uploadVida">Upload de documentos (apenas 1 ficheiro)</p>
+
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">Arraste ou clique aqui para fazer upload do documento</span>
+                <input type="file" name="file" class="drop-zone__input">
+            </div>
+            
+            
+              
+
+              <p class="ppd">
+                <label class="toggle">
+                    <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
+                    <span class="toggle__label">
+                    </span>
+                  </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
+              </p>
+
+
+
+      {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+    
+    </div>
+
+</div>
+
+
+
+</div>
+    
+
+<script>
+    var checker = document.getElementById('umapessoa');
+    if (checker){
+      var sendtxt = document.getElementById('umapessoa1');
+      var sendtxt1 = document.getElementById('umapessoa2');
+      var sendtxt2 = document.getElementById('umapessoa3');
+      var sendtxt3 = document.getElementById('umapessoa4');
+      var sendtxt4 = document.getElementById('umapessoa5');
+      var checker2 = document.getElementById('duaspessoas')
+
+
+      checker.onchange = function(){
+        sendtxt.disabled = !!this.checked ? false : true;
+        sendtxt1.disabled = !!this.checked ? false : true;
+        sendtxt2.disabled = !!this.checked ? false : true;
+        sendtxt3.disabled = !!this.checked ? false : true;
+        sendtxt4.disabled = !!this.checked ? false : true;
+        checker2.disabled = !!this.checked ? true : false;
+
+      };
+    };
+    var checker2 = document.getElementById('duaspessoas')
+    if (checker2){
+      var sendtxt00 = document.getElementById('duaspessoas1');
+      var sendtxt11 = document.getElementById('duaspessoas2');
+      var sendtxt22 = document.getElementById('duaspessoas3');
+      var sendtxt33 = document.getElementById('duaspessoas4');
+      var sendtxt44 = document.getElementById('duaspessoas5');
+      var checker3 = document.getElementById('umapessoa');
+      
+
+      checker2.onchange = function() {
+        sendtxt.disabled = !!this.checked ? false : true;
+        sendtxt1.disabled = !!this.checked ? false : true;
+        sendtxt2.disabled = !!this.checked ? false : true;
+        sendtxt3.disabled = !!this.checked ? false : true;
+        sendtxt4.disabled = !!this.checked ? false : true;
+        sendtxt00.disabled = !!this.checked ? false : true;
+        sendtxt11.disabled = !!this.checked ? false : true;
+        sendtxt22.disabled = !!this.checked ? false : true;
+        sendtxt33.disabled = !!this.checked ? false : true;
+        sendtxt44.disabled = !!this.checked ? false : true;
+        checker3.disabled = !!this.checked ? true : false;
+      }
+    }
+
+</script>
+
+
+
+
+<script>         
+    var checker = document.getElementById('ppd');
+    var sendbtn = document.getElementById('PPD');
+              
+    checker.onchange = function() {
+    sendbtn.disabled = !!this.checked ? false : true;
+    };
+</script>
+
+
+
+
+<script>
+    var subjectObject = ["Anual", "Semestral", "Trimestral", "Mensal"]
+
+window.onload = function() {
+  var subjectSel = document.getElementById("subject");
+  for (var x in subjectObject) {
+    subjectSel.options[subjectSel.options.length] = new Option(subjectObject[x]);
+  }
+  
+
+}
+</script>
+
+
+<script>
+    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+    const dropZoneElement = inputElement.closest(".drop-zone");
+  
+    dropZoneElement.addEventListener("click", (e) => {
+      inputElement.click();
+    });
+  
+    inputElement.addEventListener("change", (e) => {
+      if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+      }
+    });
+  
+    dropZoneElement.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZoneElement.classList.add("drop-zone--over");
+    });
+  
+    ["dragleave", "dragend"].forEach((type) => {
+      dropZoneElement.addEventListener(type, (e) => {
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
+    });
+  
+    dropZoneElement.addEventListener("drop", (e) => {
+      e.preventDefault();
+  
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      }
+  
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+  
+  function updateThumbnail(dropZoneElement, file) {
+    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+  
+    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+      dropZoneElement.querySelector(".drop-zone__prompt").remove();
+    }
+    if (!thumbnailElement) {
+      thumbnailElement = document.createElement("div");
+      thumbnailElement.classList.add("drop-zone__thumb");
+      dropZoneElement.appendChild(thumbnailElement);
+    }
+  
+    thumbnailElement.dataset.label = file.name;
+  
+    // Show thumbnail for image files
+    if (file.type.startsWith("image/")) {
+      const reader = new FileReader();
+  
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+      };
+    } else {
+      thumbnailElement.style.backgroundImage = null;
+    }
+  }
+  
+</script>
+
+</form>
+
+
+{% endblock %}

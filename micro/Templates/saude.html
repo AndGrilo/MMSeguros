@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}
+Seguro de Saúde
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+<div style="background-color: #1177BC;">
+    <img src="https://res.cloudinary.com/dmcagq19i/image/upload/v1634923119/MM%20Seguros/Imagens%20formul%C3%A1rios/3_ldxxbs.png">
+    <div style="text-align: center; margin-top: 2%;">
+        <a class="firstLabel">Para lhe oferecermos a melhor solução para si, preencha os campos abaixo.</a>
+    </div>
+
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Os seus dados</p>
+        <input class="nomeVida" type="text" name="nome" placeholder="Nome Completo" required>
+        <input class="nomeVida" type="text" name="email" placeholder="E-mail" required>
+    </div>
+    <div class="divSeparado3"></div>
+</div>
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado4">
+            <div class="divSeparado2-1">
+                <input class="tlmVida" type="text" name="tlm" placeholder="Telemóvel" required>
+            </div>
+            <div class="divSeparado2-2">
+                <input class="tlmVida" type="text" name="nif" placeholder="NIF" required>
+            </div>
+        </div>
+</div>
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Sobre o Tomador/ Pessoa Segura</p>
+        <input class="nomeVida1" type="text" name="data_nascimento" placeholder="Data de nascimento" required>
+    </div>
+</div>
+
+
+<div class="divSeparate">
+    <div class="divSeparado1"></div>
+    <div class="divSeparado2">
+        <p class="vidaDadosLabel">Tipo de Coberturas</p>
+
+        <label class="toggle">
+            <input class="toggle__input" type="checkbox" name="mrt">
+            <span class="toggle__label">
+            </span>
+          </label>
+          <a class="QtdPessoasVida">Hospitalização</a>
+          <br>
+          <label class="toggle toggleMarginTopVida">
+            <input class="toggle__input" type="checkbox" name="iad">
+            <span class="toggle__label">
+            </span>
+          </label>
+          <a class="QtdPessoasVida">Hospitalização + Ambulatório</a>
+          <br>
+          <label class="toggle toggleMarginTopVida">
+            <input class="toggle__input" type="checkbox" name="itp">
+            <span class="toggle__label">
+            </span>
+          </label>
+          <a class="QtdPessoasVida">Hospitalização + Ambulatório + Cobertura Internacional</a>
+          <br>
+          <label class="toggle toggleMarginTopVida">
+            <input class="toggle__input" type="checkbox" name="mrt">
+            <span class="toggle__label">
+            </span>
+          </label>
+          <a class="QtdPessoasVida">Dentes</a>
+
+
+
+        <p class="ppd" style="margin-top: 5%;">
+            <label class="toggle">
+                <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
+                <span class="toggle__label">
+                </span>
+              </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
+          </p>
+          {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+    </div>
+</div>
+
+
+
+
+</div>
+
+<script>
+    var checker = document.getElementById('ppd');
+    var sendbtn = document.getElementById('PPD');
+              
+    checker.onchange = function() {
+    sendbtn.disabled = !!this.checked ? false : true;
+    };
+</script>
+
+</form>
+
+
+{% endblock %}
