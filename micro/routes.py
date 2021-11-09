@@ -15,6 +15,8 @@ from email.mime.base import MIMEBase
 from email import encoders
 from os import read
 import werkzeug
+import base64
+import re
 #from werkzeug import secure_filename
 
 from_addr = 'mmseguros.microsite@gmail.com'
@@ -49,25 +51,22 @@ def inicial():
             nome = request.form.get('nome')
             tlm = request.form.get('tlm')
             email = request.form.get('email')
-            info_formatada = (f'--> Informações recolhidas da: Página inicial:\n\t-> Nome Completo: {nome}\n\t-> Telemóvel: {tlm}\n\t-> Email: {email}\n\n--> O cliente prefere ser contactado por:\n\t-> Email: {em}\n\t-> Telemóvel: {tl}')
-
-            # Envio das informações por email
+            info_formatada = (f'\n--> Informações recolhidas da: Página inicial:\n\t-> Nome Completo: {nome}\n\t-> Telemóvel: {tlm}\n\t-> Email: {email}\n\n--> O cliente prefere ser contactado por:\n\t-> Email: {em}\n\t-> Telemóvel: {tl}')
             
-            subject = f'Informações da Página Inicial de {nome}'
-            body = info_formatada.encode('ascii', 'xmlcharrefreplace').decode()
-            
-            msg = message.Message()
-            msg.add_header('from', from_addr)
-            msg.add_header('to', to_addr)
-            msg.add_header('subject', subject)
-            msg.set_payload(body)
+            subject = f'Subject: Informações da Página Inicial de {nome}\n'
 
-            server = smtplib.SMTP('smtp-relay.sendinblue.com', 587)
-            server.login(from_addr, '6ZGHLrgKYhXd4Ctw')
-            server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            msg = subject + info_formatada
+            msg_upload = msg.encode()
+
+            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(user="mmseguros.microsite@gmail.com", password="Microsite#")
+            mail.sendmail(from_addr, to_addr, msg_upload)
+            mail.close()
+
             flash('Formulário preenchido com sucesso!', category='success')
             return redirect(url_for('nothing'))
-
 
     if form.errors != {}:
         for err_msg in form.errors.values():
@@ -106,19 +105,24 @@ def uploader_file():
             tlm = request.form.get('tlm')
             nif = request.form.get('nif')
             umaPessoa = request.form.get('UmaPessoa')
-            #duasPessoa = request.form.get('DuasPessoas')
+            duasPessoas = request.form.get('DuasPessoas')
             if umaPessoa == 'on':
                 nome1 = request.form.get('nome1')
                 data_nascimento1 = request.form.get('data_nascimento1')
                 genero1 = request.form.get('genero1')
                 estado_civil1 = request.form.get('estado_civil1')
                 profissao1 = request.form.get('profissao1')
-            if umaPessoa == 'None':
-                nome2 = request.form.get('nome1')
-                data_nascimento2 = request.form.get('data_nascimento1')
-                genero2 = request.form.get('genero1')
-                estado_civil2 = request.form.get('estado_civil1')
-                profissao2 = request.form.get('profissao1')
+            if duasPessoas == 'on':
+                nome1 = request.form.get('nome1')
+                data_nascimento1 = request.form.get('data_nascimento1')
+                genero1 = request.form.get('genero1')
+                estado_civil1 = request.form.get('estado_civil1')
+                profissao1 = request.form.get('profissao1')
+                nome2 = request.form.get('nome2')
+                data_nascimento2 = request.form.get('data_nascimento2')
+                genero2 = request.form.get('genero2')
+                estado_civil2 = request.form.get('estado_civil2')
+                profissao2 = request.form.get('profissao2')
             seg = request.form.get('seg')
             mrt = request.form.get('mrt')
             iad = request.form.get('iad')
@@ -144,15 +148,14 @@ def uploader_file():
                 for ss in new_file_list:
                     if ss == " ":
                         ss = "_"
+                    if ss == "ç":
+                        ss = "c"
                     if ss == "'":
                         break
                     final.extend(ss)
                 global final_final
-                final_final = ''.join(final)
-
-
-
-
+                fim = ''.join(final)
+                final_final = remove_accents(fim)
                 file_name = final_final
                 filename = file_name
                 attachment = open(file_name, "rb")
@@ -170,21 +173,19 @@ def uploader_file():
                 it = "Sim"
             else:
                 it = 'Não'
-            frase_formatada = (f'Informações recolhidas da: Página de Seguros de Vida:\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> Telemóvel: {tlm}\n-> Email: {email}\n-> NIF: {nif}\n\n##################################\n\nDados da 1ª pessoa segura:\n\n-> Nome Completo: {nome1}\n-> Data de nascimento: {data_nascimento1}\n-> Género: {genero1}\n-> Estado Civil: {estado_civil1}\n-> Profissão: {profissao1}\n\n##################################\n\nDados da 2ª Pessoa segura:\n\n-> Nome completo: {nome2}\n-> Data de nascimento: {data_nascimento2}\n-> Género: {genero2}\n-> Estado Civil: {estado_civil2}\n-> Profissão: {profissao2}\n\n##################################\n\n Sobre o seu Seguro:\n\n-> Capital Seguro / Valor em dívida: {seg} €\n\nCoberturas:\n\n-> Morte:{mr}\n-> IAD Invalidez Absoluta Definitiva: {ia}\n-> ITP Invalidez Total Permanente: {it}\n\n##################################\n\nFracionamento:\n\n-> {subject}')
+            frase_formatada = (f'\nInformações recolhidas da: Página de Seguros de Vida:\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> Telemóvel: {tlm}\n-> Email: {email}\n-> NIF: {nif}\n\n##################################\n\nDados da 1ª pessoa segura:\n\n-> Nome Completo: {nome1}\n-> Data de nascimento: {data_nascimento1}\n-> Género: {genero1}\n-> Estado Civil: {estado_civil1}\n-> Profissão: {profissao1}\n\n##################################\n\nDados da 2ª Pessoa segura:\n\n-> Nome completo: {nome2}\n-> Data de nascimento: {data_nascimento2}\n-> Género: {genero2}\n-> Estado Civil: {estado_civil2}\n-> Profissão: {profissao2}\n\n##################################\n\n Sobre o seu Seguro:\n\n-> Capital Seguro / Valor em dívida: {seg} €\n\nCoberturas:\n\n-> Morte:{mr}\n-> IAD Invalidez Absoluta Definitiva: {ia}\n-> ITP Invalidez Total Permanente: {it}\n\n##################################\n\nFracionamento:\n\n-> {subject}')
 
             #Email
 
-            subject1 = f'Informações de Página Seguros de Vida {nome}'
-            body = frase_formatada.encode('ascii', 'xmlcharrefreplace').decode()
+            subject1 = f'Informações de Página Seguros de Vida {nome}\n'
+            body = frase_formatada
             
             msg = MIMEMultipart()
             msg['From'] = from_addr
             msg['To'] = to_addr
             msg['Subject'] = subject1
-            content = body
 
-            body = MIMEText(content, 'plain')
-            msg.attach(body)
+            msg.attach(MIMEText(body))
             
             part = MIMEBase('application', 'octet-stream')
             if c == 1:
@@ -195,17 +196,13 @@ def uploader_file():
 
             
 
-
-
-            #msg = message.Message()
-            #msg.add_header('from', from_addr)
-            #msg.add_header('to', to_addr)
-            #msg.add_header('subject', subject1)
-            #msg.set_payload(body)
-
-            server = smtplib.SMTP('smtp-relay.sendinblue.com', 587)
-            server.login(from_addr, '6ZGHLrgKYhXd4Ctw')
-            server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(user="mmseguros.microsite@gmail.com", password="Microsite#")
+            #server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            mail.sendmail(from_addr, to_addr, msg.as_string())
+            mail.close()
             flash('Formulário preenchido com sucesso!', category='success')
             return redirect(url_for('nothing'))
 
@@ -225,22 +222,44 @@ def saude():
             tlm = request.form.get('tlm')
             nif = request.form.get('nif')
             data_nascimento = request.form.get('data_nascimento')
-            info_formatada = (f'Informações recolhidas da: Página de Seguros de Saúde:\n-> Nome Completo: {nome}\n-> Email: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n-> Data de nascimento: {data_nascimento}')
+            hospital = request.form.get('hospital')
+            hospital1 = request.form.get('hospital1')
+            hospital2 = request.form.get('hospital2')
+            dentes = request.form.get('dentes')
+            if hospital == 'on':
+                hospital = "Sim"
+            else:
+                hospital = "Não"
+
+            if hospital1 == 'on':
+                hospital1 = "Sim"
+            else:
+                hospital1 = "Não"
+
+            if hospital2 == 'on':
+                hospital2 = "Sim"
+            else:
+                hospital2 = "Não"
+
+            if dentes == 'on':
+                dentes = "Sim"
+            else:
+                dentes = "Não"
+            info_formatada = (f'\nInformações recolhidas da: Página de Seguros de Saúde:\n-> Nome Completo: {nome}\n-> Email: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n-> Data de nascimento: {data_nascimento}\n\n##################################\n\nTipo de coberturas:\n\n-> Hospitalização: {hospital}\n-> Hospitalização + Ambulatório: {hospital1}\n-> Hospitalização + Ambulatório + Cobertura Internacional: {hospital2}\n-> Dentes: {dentes}')
 
             #Email
 
-            subject = f'Informações de Página Seguros de Saúde de {nome}'
-            body = info_formatada.encode('ascii', 'xmlcharrefreplace').decode()
+            subject = f'Subject: Informações de Página Seguros de Saúde de {nome}\n'
             
-            msg = message.Message()
-            msg.add_header('from', from_addr)
-            msg.add_header('to', to_addr)
-            msg.add_header('subject', subject)
-            msg.set_payload(body)
+            msg = subject + info_formatada
+            msg_upload = msg.encode()
 
-            server = smtplib.SMTP('smtp-relay.sendinblue.com', 587)
-            server.login(from_addr, '6ZGHLrgKYhXd4Ctw')
-            server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(user="mmseguros.microsite@gmail.com", password="Microsite#")
+            mail.sendmail(from_addr, to_addr, msg_upload)
+            mail.close()
             flash('Formulário preenchido com sucesso!', category='success')
             return redirect(url_for('nothing'))
 
@@ -280,15 +299,26 @@ def habitacao():
                 for (dirpath, dirnames, filenames) in walk('C:/Users/AndréMSGrilo/Desktop/Python stuff MAIN'):
                     a.extend(filenames)
                     break
-                file_name = a[0]
+                new_file_list = str(file).replace("<FileStorage: '", "")
+                final = []
+                for ss in new_file_list:
+                    if ss == " ":
+                        ss = "_"
+                    if ss == "ç":
+                        ss = "c"
+                    if ss == "'":
+                        break
+                    final.extend(ss)
+                global final_final
+                fim = ''.join(final)
+                final_final = remove_accents(fim)
+                file_name = final_final
                 filename = file_name
                 attachment = open(file_name, "rb")
                 
                 e = 1
 
             print("file uploaded")
-
-
 
             if ef == 'on':
                 e_f = "Sim"
@@ -299,12 +329,12 @@ def habitacao():
             else:
                 r_c = 'Não'
 
-            info_formatada = (f'Informações recolhidas da Página de Seguros de Multirriscos\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> E-mail: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n\n##################################\n\nSobre a sua habitação:\n\n-> Local de Risco: {local}\n-> Código-Postal: {codigo_postal}\n-> Área Bruta Privativa Total {area_bruta}\n-> Número de W.C.: {num_w_c}\n-> Ano de Construção: {ano_de_construcao}\n\n##################################\n\nCoberturas:\n\n-> Edifício/Fração: {e_f}\n-> Recheio/Conteúdo: {r_c}')
+            info_formatada = (f'\nInformações recolhidas da Página de Seguros de Multirriscos\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> E-mail: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n\n##################################\n\nSobre a sua habitação:\n\n-> Local de Risco: {local}\n-> Código-Postal: {codigo_postal}\n-> Área Bruta Privativa Total {area_bruta}\n-> Número de W.C.: {num_w_c}\n-> Ano de Construção: {ano_de_construcao}\n\n##################################\n\nCoberturas:\n\n-> Edifício/Fração: {e_f}\n-> Recheio/Conteúdo: {r_c}')
 
             #Email
             
-            subject1 = f'Informações de Página Seguros de Habitação de {nome}'
-            body = info_formatada.encode('ascii', 'xmlcharrefreplace').decode()
+            subject1 = f'Informações de Página Seguros de Habitação de {nome}\n'
+            body = info_formatada
 
             
 
@@ -312,11 +342,8 @@ def habitacao():
             msg['From'] = from_addr
             msg['To'] = to_addr
             msg['Subject'] = subject1
-            content = body
-
-
-            body = MIMEText(content, 'plain')
-            msg.attach(body)
+            
+            msg.attach(MIMEText(body))
             
             part = MIMEBase('application', 'octet-stream')
             if c == 1:
@@ -325,16 +352,12 @@ def habitacao():
                 part.add_header('Content-Disposition', "attachment; filename = %s" % filename)
             msg.attach(part)
 
-
-
-
-
-
-
-
-            server = smtplib.SMTP('smtp-relay.sendinblue.com', 587)
-            server.login(from_addr, '6ZGHLrgKYhXd4Ctw')
-            server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(user="mmseguros.microsite@gmail.com", password="Microsite#")
+            mail.sendmail(from_addr, to_addr, msg.as_string())
+            mail.close()
             flash('Formulário preenchido com sucesso!', category='success')
             return redirect(url_for('nothing'))
 
@@ -372,19 +395,18 @@ def acidentes():
 
             obs = request.form.get('obs')
 
-            info_formatada = (f'Informações recolhidas da:\nPágina de Seguros de Acidentes Pessoais:\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> E-mail: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n-> Data de Nascimento: {data_nascimento}\n-> Profissão: {profissao}\n\n##################################\n\nSobre o seu seguro:\n\n-> Capitais: {capitais} €\n->Utiliza viaturas de duas rodas: {sim}{nao}\n\n##################################\n\nObservações:\n{obs}')
-            subject = f'Informações de Página Seguros de Acidentes Pessoais de {nome}'
-            body = info_formatada.encode('ascii', 'xmlcharrefreplace').decode()
+            info_formatada = (f'\nInformações recolhidas da: Página de Seguros de Acidentes Pessoais:\n\nOs seus dados:\n\n-> Nome completo: {nome}\n-> E-mail: {email}\n-> Telemóvel: {tlm}\n-> NIF: {nif}\n-> Data de Nascimento: {data_nascimento}\n-> Profissão: {profissao}\n\n##################################\n\nSobre o seu seguro:\n\n-> Capitais: {capitais} €\n->Utiliza viaturas de duas rodas: {sim}{nao}\n\n##################################\n\nObservações:\n{obs}')
+            subject = f'Subject: Informações de Página Seguros de Acidentes Pessoais de {nome}\n'
             
-            msg = message.Message()
-            msg.add_header('from', from_addr)
-            msg.add_header('to', to_addr)
-            msg.add_header('subject', subject)
-            msg.set_payload(body)
+            msg = subject + info_formatada
+            msg_upload = msg.encode()
 
-            server = smtplib.SMTP('smtp-relay.sendinblue.com', 587)
-            server.login(from_addr, '6ZGHLrgKYhXd4Ctw')
-            server.send_message(msg, from_addr=from_addr, to_addrs=[to_addr])
+            mail = smtplib.SMTP('smtp.gmail.com', 587)
+            mail.ehlo()
+            mail.starttls()
+            mail.login(user="mmseguros.microsite@gmail.com", password="Microsite#")
+            mail.sendmail(from_addr, to_addr, msg_upload)
+            mail.close()
             flash('Formulário preenchido com sucesso!', category='success')
             return redirect(url_for('nothing'))
 
@@ -396,3 +418,14 @@ def acidentes():
 
 
     return render_template('acidentes.html', form = form)
+
+def remove_accents(raw_text):
+    raw_text = re.sub(u"[àáâãäå]", 'a', raw_text)
+    raw_text = re.sub(u"[èéêë]", 'e', raw_text)
+    raw_text = re.sub(u"[ìíîï]", 'i', raw_text)
+    raw_text = re.sub(u"[òóôõö]", 'o', raw_text)
+    raw_text = re.sub(u"[ùúûü]", 'u', raw_text)
+    raw_text = re.sub(u"[ýÿ]", 'y', raw_text)
+    raw_text = re.sub(u"[ß]", 'ss', raw_text)
+    raw_text = re.sub(u"[ñ]", 'n', raw_text)
+    return raw_text
