@@ -17,8 +17,8 @@ from os import read
 import werkzeug
 #from werkzeug import secure_filename
 
-from_addr = 'andregrilo.net@gmail.com'
-to_addr = 'mmseguros.microsite@gmail.com'
+from_addr = 'mmseguros.microsite@gmail.com'
+to_addr = 'andregrilo.cbs@gmail.com'
 e=0
 c=0
 @app.route('/')
@@ -26,7 +26,8 @@ def nothing():
     if e != 1:
         pass
     if c == 1:
-        os.remove(a[0])
+        os.getcwd()
+        os.remove(final_final)
     return redirect(url_for('inicial'))
 @app.route('/inicial', methods=["GET", "POST"])
 def inicial():
@@ -138,7 +139,21 @@ def uploader_file():
                 for (dirpath, dirnames, filenames) in walk('C:/Users/AndréMSGrilo/Desktop/Python stuff MAIN'):
                     a.extend(filenames)
                     break
-                file_name = a[0]
+                new_file_list = str(file).replace("<FileStorage: '", "")
+                final = []
+                for ss in new_file_list:
+                    if ss == " ":
+                        ss = "_"
+                    if ss == "'":
+                        break
+                    final.extend(ss)
+                global final_final
+                final_final = ''.join(final)
+
+
+
+
+                file_name = final_final
                 filename = file_name
                 attachment = open(file_name, "rb")
                 
