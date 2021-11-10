@@ -20,7 +20,7 @@ Seguro de Vida
 
 <div class="divSeparate" style="margin-top: 5%;">
     <div class="divSeparado1">
-        <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141656/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/1_paklpc.png">
+        <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636505577/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/1_bcukwh.png">
     </div>
     <div class="divSeparado2">
         <p class="vidaDadosLabel">Os seus dados</p>
@@ -44,7 +44,7 @@ Seguro de Vida
 <p></p>
 <div class="divSeparate">
     <div class="divSeparado1">
-      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141656/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/2_wmsii6.png">
+      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636505641/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/2_nsrffj.png">
     </div>
     <div class="divSeparado2">
         <p class="vidaDadosLabel">Sobre as pessoas a segurar</p>
@@ -132,7 +132,7 @@ Seguro de Vida
 
 <div class="divSeparate">
     <div class="divSeparado1">
-      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636141889/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/3_rawgzo.png">
+      <img class="iconesLaterais" src="https://res.cloudinary.com/dmcagq19i/image/upload/v1636505641/MM%20Seguros/Icones/icones%20de%20Formul%C3%A1rios/3_dq778n.png">
     </div>
     <div class="divSeparado2">
         <p class="vidaDadosLabel">Sobre o seu seguro</p>
@@ -142,22 +142,22 @@ Seguro de Vida
                 <input class="toggle__input" type="checkbox" name="mrt">
                 <span class="toggle__label">
                 </span>
-              </label>
-              <a class="QtdPessoasVida">Morte</a>
+              </label><a class="QtdPessoasVida">Morte</a>
+              
               <br>
               <label class="toggle toggleMarginTopVida">
                 <input class="toggle__input" type="checkbox" name="iad">
                 <span class="toggle__label">
                 </span>
-              </label>
-              <a class="QtdPessoasVida">IAD Invalidez Absoluta Definitiva</a>
+              </label><a class="QtdPessoasVida">IAD Invalidez Absoluta Definitiva</a>
+              
               <br>
               <label class="toggle toggleMarginTopVida">
                 <input class="toggle__input" type="checkbox" name="itp">
                 <span class="toggle__label">
                 </span>
-              </label>
-              <a class="QtdPessoasVida">ITP Invalidez Total Permanente</a>
+              </label><a class="QtdPessoasVida">ITP Invalidez Total Permanente</a>
+              
 
               <p class="Coberturas">Fracionamento</p>
 
@@ -170,26 +170,26 @@ Seguro de Vida
               <p class="uploadVida">Upload de documentos (apenas 1 ficheiro)</p>
 
               <div class="drop-zone">
-                <span class="drop-zone__prompt">Arraste ou clique aqui para fazer upload do documento</span>
+                <span class="drop-zone__prompt">Arraste ou clique aqui para fazer upload do documento<br>Máximo: 6MB</span>
                 <input type="file" name="file" class="drop-zone__input">
             </div>
-            
-            
-              
-
-              <p class="ppd">
-                <label class="toggle">
-                    <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
-                    <span class="toggle__label">
-                    </span>
-                  </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
-              </p>
-
-
-
-      {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+                
     
     </div>
+
+</div>
+<div class="divSeparate">
+  <div class="divSeparado1"></div>
+  <div style="width: 80%;">
+    <p style="color:white">
+      <label class="toggle">
+          <input class="toggle__input" type="checkbox" name="ppd" id="ppd">
+          <span class="toggle__label">
+          </span>
+        </label>Declaro que li e aceito a <a>Política de Proteção de Dados</a>
+    </p>
+    {{ form.submit(class="submeterVida", disabled="disabled", id="PPD") }}
+  </div>
 
 </div>
 

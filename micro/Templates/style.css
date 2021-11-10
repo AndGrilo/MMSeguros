@@ -522,7 +522,7 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
         font-size: 12px;
     }
     .QtdPessoasVida{
-        font-size: 11px;
+        font-size: 10px;
     }
     .numeroVida{
         font-size:14px;
@@ -575,7 +575,7 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
         font-size: 7px;
     }
     a.button1{
-        font-size:9px;
+        font-size:8.5px;
         padding:4.5px;
     }
     .simulacao{

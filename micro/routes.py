@@ -1,3 +1,4 @@
+from werkzeug import datastructures
 from werkzeug.utils import secure_filename
 from micro import app
 from micro.forms import Aconselhamento, VidaForm, SaudeForm, HabitacaoForm, AcidentesForm
@@ -17,7 +18,8 @@ from os import read
 import werkzeug
 import base64
 import re
-#from werkzeug import secure_filename
+from werkzeug.datastructures import FileStorage
+
 
 from_addr = 'mmseguros.microsite@gmail.com'
 to_addr = 'andregrilo.cbs@gmail.com'
@@ -129,13 +131,20 @@ def uploader_file():
             itp = request.form.get('itp')
             subject = request.form.get('subject')
             file = request.files['file']
+            file.seek(0, os.SEEK_END)
+            size = file.tell()
             global a
             global e
             global c
             if str(file) == "<FileStorage: '' ('application/octet-stream')>":
                 c = 0
-            else:
+            elif size <= 6000000:
                 c = 1
+            if size >= 6000001:
+                size = float(size/1000000)
+                flash(f'O ficheiro é demasiado grande: {size} MegaBytes.', category='danger')
+                c = 0
+                return(redirect(url_for('vida')))
             if c == 1:
                 
                 a = []
@@ -146,6 +155,10 @@ def uploader_file():
                 new_file_list = str(file).replace("<FileStorage: '", "")
                 final = []
                 for ss in new_file_list:
+                    if ss == '(':
+                        ss = ""
+                    if ss == ')':
+                        ss = ""
                     if ss == " ":
                         ss = "_"
                     if ss == "ç":
@@ -187,12 +200,13 @@ def uploader_file():
 
             msg.attach(MIMEText(body))
             
-            part = MIMEBase('application', 'octet-stream')
+            
             if c == 1:
+                part = MIMEBase('application', 'octet-stream')
                 part.set_payload((attachment).read())
                 encoders.encode_base64(part)
                 part.add_header('Content-Disposition', "attachment; filename = %s" % filename)
-            msg.attach(part)
+                msg.attach(part)
 
             
 
@@ -287,11 +301,18 @@ def habitacao():
             ef = request.form.get('ef')
             rc = request.form.get('rc')
             file = request.files['file']
+            file.seek(0, os.SEEK_END)
+            size = file.tell()
             global a, e, c
             if str(file) == "<FileStorage: '' ('application/octet-stream')>":
                 c = 0
-            else:
+            elif size <= 6000000:
                 c = 1
+            if size >= 6000001:
+                size = float(size/1000000)
+                flash(f'O ficheiro é demasiado grande: {size} MegaBytes.', category='danger')
+                c = 0
+                return(redirect(url_for('habitacao')))
             if c == 1:
                 
                 a = []
